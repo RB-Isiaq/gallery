@@ -29,10 +29,35 @@ export default function Home() {
       setLoading(false);
     }
   };
+
+  const handleFillDetails = () => {
+    setEmail("user@example.com");
+    setPassword("1Password");
+  };
   return (
-    <main className="flex min-h-screen items-center justify-between p-3 sm:p-24 flex-wrap">
-      {/* <div></div> */}
-      <div className="w-full max-w-[500px] h-full flex flex-col gap-6 justify-center items-center py-10 px-3 border-2 border-solid border-green-300">
+    <main className="flex min-h-screen items-center justify-center sm:p-24 flex-wrap gap-4 bg-gradient-to-r from-green-300 to-blue-500 p-4">
+      <div className="flex-[1] w-full  text-gray-600 text-center flex flex-col justify-center items-center">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-4">
+          Home of Beautiful Images
+        </h1>
+        <p className="w-[350px] sm:text-lg mb-4">
+          Experience the Art of Effortless Image Curation: A stunning platform
+          where you can effortlessly curate your image collection through
+          intuitive drag-and-drop interactions.
+        </p>
+        <p className="w-[350px]">
+          Please{" "}
+          <span
+            className="cursor-pointer text-green-600 sm:text-lg"
+            onClick={handleFillDetails}
+          >
+            login
+          </span>{" "}
+          to continue.
+        </p>
+      </div>
+
+      <div className="flex-[1] w-full max-w-[500px] h-full flex flex-col gap-6 justify-center items-center py-10 px-3 border border-solid border-green-100 shadow-lg">
         <h1 className="text-2xl ">Login</h1>
         <form
           className="flex flex-col gap-3 w-full max-w-[500px] justify-center items-center"
