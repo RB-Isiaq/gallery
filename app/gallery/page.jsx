@@ -67,7 +67,9 @@ const Gallery = () => {
       setImages(allImages);
     } else {
       setImages(
-        images.filter((image) => image.tags.includes(searchValue.toLowerCase()))
+        allImages.filter((image) =>
+          image.tags.includes(searchValue.toLowerCase())
+        )
       );
     }
   };
@@ -101,12 +103,12 @@ const Gallery = () => {
           <p className="mb-6 text-center max-w-[500px]">
             Welcome to our captivating gallery of beautiful images. You can as
             well upload your own stunning additions to enrich this visual
-            tapestry.
+            scenery.
           </p>
 
           <form
             onSubmit={handleSearch}
-            className="flex flex-col gap-3 w-full max-w-[500px] justify-center items-center my-4"
+            className="relative flex flex-col gap-3 w-full max-w-[500px] justify-center items-center my-4"
           >
             <input
               type="search"
@@ -117,7 +119,7 @@ const Gallery = () => {
             />
 
             <button
-              className="w-[100px] h-10 flex justify-center items-center rounded-md bg-slate-50 text-black"
+              className="absolute top-0 right-0 w-[100px] h-10 flex justify-center items-center rounded-md bg-slate-50 text-black"
               type="submit"
             >
               Search
@@ -125,15 +127,8 @@ const Gallery = () => {
           </form>
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col gap-3 w-full max-w-[500px] justify-center items-center"
+            className="relative flex flex-col gap-3 w-full max-w-[500px] justify-center items-center"
           >
-            <input
-              type="text"
-              className="w-full px-3 py-2 rounded-md text-black"
-              name="imageTags"
-              placeholder="image tag"
-              required
-            />
             <label className="relative w-full rounded-md">
               <input
                 type="file"
@@ -146,8 +141,15 @@ const Gallery = () => {
               </div>
             </label>
 
+            <input
+              type="text"
+              className="w-full px-3 py-2 rounded-md text-black"
+              name="imageTags"
+              placeholder="image tag"
+              required
+            />
             <button
-              className="w-[100px] h-10 flex justify-center items-center rounded-md bg-slate-50 text-black"
+              className="absolute bottom-0 right-0 w-[100px] h-10 flex justify-center items-center rounded-md bg-slate-50 text-black"
               type="submit"
             >
               Upload
