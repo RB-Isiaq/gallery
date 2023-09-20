@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import Card from "../Card";
 
 const ImageGallery = ({ images, onDragEnd }) => {
   const [direction, setDirection] = useState("vertical");
 
   useEffect(() => {
     const handleResize = () => {
-      // Update the layout class based on screen width
       if (window.innerWidth >= 641) {
         setDirection("horizontal");
       } else {
@@ -15,13 +13,10 @@ const ImageGallery = ({ images, onDragEnd }) => {
       }
     };
 
-    // Initial setup
     handleResize();
 
-    // Listen for window resize events
     window.addEventListener("resize", handleResize);
 
-    // Clean up the event listener on unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -29,7 +24,7 @@ const ImageGallery = ({ images, onDragEnd }) => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="image-gallery" direction={direction}>
-        {(provided) => (
+        {(provided, snapshot) => (
           <div
             className="w-full flex  flex-col justify-center items-center sm:grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 "
             {...provided.droppableProps}
@@ -39,7 +34,9 @@ const ImageGallery = ({ images, onDragEnd }) => {
               <Draggable key={image.id} draggableId={image.id} index={index}>
                 {(provided) => (
                   <div
-                    className={`relative w-[250px] h-[370px] hover:scale-[1.02]  `}
+                    className={`relative w-[250px] h-[370px] hover:scale-[1.02] ${
+                      snapshot.isDragging ? "enlarge-while-dragging" : ""
+                    }`}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}

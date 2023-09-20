@@ -1,14 +1,15 @@
 "use client";
 import { useState } from "react";
 import { auth } from "@/service/firebase";
-// import { useRouter } from "next/router";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const router = useRouter();
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,20 +18,16 @@ export default function Home() {
     const form = new FormData(e.target);
     const { email, password } = Object.fromEntries(form.entries());
     try {
-      console.log(auth);
-      const user = await auth.signInWithEmailAndPassword(email, password);
-      console.log(user);
+      const user = await signInWithEmailAndPassword(auth, email, password);
       if (user) {
-        console.log(user, "IS USER");
-        // router.push("/gallery");
+        router.push("/gallery");
       }
     } catch (error) {
       console.log(error.message);
-      setError(error.message);
+      setError("Invalid login parameters");
     } finally {
       setLoading(false);
     }
-    console.log(email, password);
   };
   return (
     <main className="flex min-h-screen items-center justify-between p-3 sm:p-24 flex-wrap">
@@ -68,6 +65,7 @@ export default function Home() {
             </button>
           </div>
         </form>
+        {error && <p className="text-red-400 text-center">{error}</p>}
         <div className="w-full flex flex-col gap-2 p-2">
           <p>Default login parameters are:</p>
           <p>
