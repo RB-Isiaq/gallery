@@ -42,12 +42,12 @@ const ImageGallery = ({ images, onDragEnd }) => {
                     {...provided.dragHandleProps}
                   >
                     <div className="absolute top-0 p-[15px]">
-                      <p className="flex justify-center items-center text-[12px] font-bold text-gray-900 rounded-lg bg-[#F3F9F6] bg-opacity-50 backdrop-blur-sm px-2 py-1">
+                      <p className="flex justify-center items-center text-[12px] font-bold text-gray-900 rounded-lg bg-[#F3F9F6] bg-opacity-70 backdrop-blur-sm px-2 py-1">
                         {image.tags}
                       </p>
                     </div>
                     <img
-                      src={image.src}
+                      src={image.imageUrl}
                       alt={image.alt}
                       className="w-full h-full  "
                     />

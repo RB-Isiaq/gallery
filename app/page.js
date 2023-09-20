@@ -24,7 +24,9 @@ export default function Home() {
       }
     } catch (error) {
       console.log(error.message);
-      setError("Invalid login parameters");
+      setError(
+        "Invalid login parameters. Please use the default login parameters"
+      );
     } finally {
       setLoading(false);
     }
@@ -37,7 +39,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen items-center justify-center sm:p-24 flex-wrap gap-4 bg-gradient-to-r from-green-300 to-blue-500 p-4">
       <div className="flex-[1] w-full  text-gray-600 text-center flex flex-col justify-center items-center">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-4">
+        <h1 className="w-[270px] text-[26px] sm:text-3xl font-bold mb-4">
           Home of Beautiful Images
         </h1>
         <p className="w-[350px] sm:text-lg mb-4">
@@ -48,7 +50,7 @@ export default function Home() {
         <p className="w-[350px]">
           Please{" "}
           <span
-            className="cursor-pointer text-green-600 sm:text-lg"
+            className="cursor-pointer text-green-600 sm:text-lg font-extrabold"
             onClick={handleFillDetails}
           >
             login
@@ -57,14 +59,14 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="flex-[1] w-full max-w-[500px] h-full flex flex-col gap-6 justify-center items-center py-10 px-3 border border-solid border-green-100 shadow-lg">
-        <h1 className="text-2xl ">Login</h1>
+      <div className="flex-[1] w-full max-w-[500px] h-full flex flex-col gap-6 justify-center items-center py-10 px-3 border border-solid border-black shadow-lg rounded-2xl">
+        <h1 className="text-2xl text-black">Login</h1>
         <form
           className="flex flex-col gap-3 w-full max-w-[500px] justify-center items-center"
           onSubmit={handleSubmit}
         >
           <input
-            className="w-full px-3 py-2 rounded-md"
+            className="w-full px-3 py-2 rounded-md text-black"
             name="email"
             type="email"
             required
@@ -73,7 +75,7 @@ export default function Home() {
             placeholder="Email"
           />
           <input
-            className="w-full px-3 py-2 rounded-md"
+            className="w-full px-3 py-2 rounded-md text-black"
             name="password"
             type="password"
             placeholder="password"
@@ -83,15 +85,17 @@ export default function Home() {
           />
           <div className="flex gap-4 mt-3">
             <button
-              className="w-[100px] h-10 flex justify-center items-center rounded-md bg-slate-50 text-green-600"
+              className="w-[100px] h-10 flex justify-center items-center rounded-md bg-slate-50 text-black"
               type="submit"
             >
               <p>{!loading ? "Login" : "Loggin in..."}</p>
             </button>
           </div>
         </form>
-        {error && <p className="text-red-400 text-center">{error}</p>}
-        <div className="w-full flex flex-col gap-2 p-2">
+        {error && (
+          <p className="max-w-[300px] text-red-700 text-center">{error}</p>
+        )}
+        <div className="w-full flex flex-col gap-2 p-2 text-black">
           <p>Default login parameters are:</p>
           <p>
             Email:
