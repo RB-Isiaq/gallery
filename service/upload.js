@@ -4,15 +4,11 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export const uploadImageAndText = async (imageFile, imageTags) => {
   try {
-    console.log(imageFile, imageTags);
     const storageRef = ref(storage, `images/${imageFile.name}`);
     const imageSnapshot = await uploadBytes(storageRef, imageFile);
 
-    // Get the download URL for the uploaded image
     const imageUrl = await getDownloadURL(imageSnapshot.ref);
-    console.log(imageUrl);
 
-    // Store associated text data in Firebase Realtime Database
     const imageData = {
       imageUrl,
       tags: imageTags,
@@ -28,16 +24,6 @@ export const uploadImageAndText = async (imageFile, imageTags) => {
               body: JSON.stringify(imageData),
             }
           );
-
-          console.log(response);
-          if (response.ok) {
-            console.log("Image and text data uploaded");
-          } else {
-            console.error(
-              "Error uploading image and text data:",
-              response.statusText
-            );
-          }
         } catch (error) {
           console.error("Error uploading image and text data:", error);
         }
@@ -45,8 +31,6 @@ export const uploadImageAndText = async (imageFile, imageTags) => {
         console.log("User is not authenticated.");
       }
     });
-
-    console.log("Image and text data uploaded:");
   } catch (error) {
     console.error("Error uploading image and text data:", error);
   }
@@ -57,6 +41,5 @@ export const getImageData = async () => {
     "https://gallery-686d2-default-rtdb.firebaseio.com/images.json"
   );
 
-  console.log(response);
   return response.json();
 };
