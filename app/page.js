@@ -34,12 +34,12 @@ export default function Home() {
 
   const handleFillDetails = () => {
     setEmail("user@example.com");
-    setPassword("1Password");
+    setPassword("userPass");
   };
   return (
     <main className="flex min-h-screen items-center justify-center sm:p-24 flex-wrap gap-4 bg-gradient-to-r from-green-300 to-blue-500 p-4">
       <div className="flex-[1] w-full  text-gray-600 text-center flex flex-col justify-center items-center">
-        <h1 className="w-[270px] text-[26px] sm:text-3xl font-bold mb-4">
+        <h1 className="w-[270px] sm:w-full text-[26px] sm:text-3xl font-bold mb-4">
           Home of Beautiful Images
         </h1>
         <p className="w-[350px] sm:text-lg mb-4">
@@ -88,7 +88,7 @@ export default function Home() {
               className="w-[100px] h-10 flex justify-center items-center rounded-md bg-slate-50 text-black"
               type="submit"
             >
-              <p>{!loading ? "Login" : "Loggin in..."}</p>
+              <p>{!loading ? "Login" : "Logging in..."}</p>
             </button>
           </div>
         </form>
@@ -110,9 +110,9 @@ export default function Home() {
             Password:
             <span
               className="cursor-pointer text-green-700 ml-1"
-              onClick={() => setPassword("1Password")}
+              onClick={() => setPassword("userPass")}
             >
-              1Password
+              userPass
             </span>
           </p>
         </div>

@@ -5,6 +5,8 @@ import { imagesFolder } from "./constants";
 import ImageGallery from "@/components/ImageGallery";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { getImageData, uploadImageAndText } from "@/service/upload";
+import { signOut } from "firebase/auth";
+import { auth } from "@/service/firebase";
 
 const Gallery = () => {
   const [images, setImages] = useState(imagesFolder);
@@ -51,18 +53,7 @@ const Gallery = () => {
     }
   }, [images]);
 
-  useEffect(() => {
-    getAllImages();
-
-    const timeout = setTimeout(() => {
-      setError("");
-    }, 3000);
-
-    return () => clearTimeout(timeout);
-  }, []);
-
-  const handleSearch = (e) => {
-    e.preventDefault();
+  const handleSearch = useCallback(() => {
     if (searchValue === "") {
       setImages(allImages);
     } else {
@@ -72,7 +63,22 @@ const Gallery = () => {
         )
       );
     }
+  }, [searchValue]);
+
+  const handleLogout = () => {
+    signOut(auth);
   };
+
+  useEffect(() => {
+    handleSearch();
+    if (searchValue === "") getAllImages();
+
+    const timeout = setTimeout(() => {
+      setError("");
+    }, 3000);
+
+    return () => clearTimeout(timeout);
+  }, [handleSearch, searchValue]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -99,17 +105,22 @@ const Gallery = () => {
     <ProtectedRoute>
       <div className="flex gap-2 bg-black text-white w-full h-full p-2 flex-col lg:flex-row">
         <div className="w-full h-full md:h-screen flex flex-col flex-[1] px-4 py-10">
-          <p className="text-2xl sm:text-3xl mb-4">Hello user, 👋</p>
+          <div className="flex justify-between items-center w-full mb-4">
+            <p className="text-2xl sm:text-3xl">Hello user, 👋</p>
+            <button
+              className="w-[100px] h-10 flex justify-center items-center rounded-md bg-slate-50 text-black"
+              onClick={handleLogout}
+            >
+              Log out
+            </button>
+          </div>
           <p className="mb-6 text-center max-w-[500px]">
             Welcome to our captivating gallery of beautiful images. You can as
             well upload your own stunning additions to enrich this visual
             scenery.
           </p>
 
-          <form
-            onSubmit={handleSearch}
-            className="relative flex flex-col gap-3 w-full max-w-[500px] justify-center items-center my-4"
-          >
+          <form className="relative flex flex-col gap-3 w-full max-w-[500px] justify-center items-center my-4">
             <input
               type="search"
               className="w-full px-3 py-2 rounded-md text-black"
@@ -117,13 +128,6 @@ const Gallery = () => {
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
             />
-
-            <button
-              className="absolute top-0 right-0 w-[100px] h-10 flex justify-center items-center rounded-md bg-slate-50 text-black"
-              type="submit"
-            >
-              Search
-            </button>
           </form>
           <form
             onSubmit={handleSubmit}
@@ -149,7 +153,7 @@ const Gallery = () => {
               required
             />
             <button
-              className="absolute bottom-0 right-0 w-[100px] h-10 flex justify-center items-center rounded-md bg-slate-50 text-black"
+              className="absolute bottom-0 right-0 w-[100px] h-9 flex justify-center items-center rounded-md bg-slate-50 text-black"
               type="submit"
             >
               Upload
